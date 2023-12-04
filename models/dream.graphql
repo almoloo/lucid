@@ -1,0 +1,11 @@
+type dream @createModel(accountRelation: LIST, description: "dream") {
+  author: DID! @documentAccount
+  version: CommitID! @documentVersion
+  modelVersion: String! @string(maxLength: 100)
+  text: String! @string(maxLength: 300000000)
+  image: String @string(maxLength: 2000000)
+  options: String @string(maxLength: 300000000)
+  public: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
