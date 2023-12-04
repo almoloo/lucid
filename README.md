@@ -1,6 +1,6 @@
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
-# Lucid
+# :waning_crescent_moon: Lucid
 
 Your ultimate dream companion for recording, exploring, and enhancing your journey through the realm of dreams.
 
@@ -64,6 +64,12 @@ Lucid has been successfully launched on your local network. Follow the address p
 To run this project, you will need to add the following environment variables to your .env file
 
 `VITE_DREAM_VERSION`: 0.0.1
+
+## Roadmap
+
+- [ ] Add AI integration for dream interpretation.
+
+- [ ] Generate images based on each dream using AI.
 
 ## Disclaimer
 
