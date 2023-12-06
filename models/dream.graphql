@@ -6,6 +6,8 @@ type dream @createModel(accountRelation: LIST, description: "dream") {
   image: String @string(maxLength: 2000000)
   options: String @string(maxLength: 300000000)
   public: Boolean!
+  date: DateTime!
+  emotion: String @string(maxLength: 300000000)
   createdAt: DateTime!
   updatedAt: DateTime!
 }

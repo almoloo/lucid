@@ -14,4 +14,14 @@ type DreamFormData = {
   public: boolean;
 };
 
-export type { ConnectedButtonProps, ConnectButtonProps, DreamFormData };
+interface AvatarProps {
+  address?: string;
+  className?: string;
+}
+
+export type {
+  ConnectedButtonProps,
+  ConnectButtonProps,
+  DreamFormData,
+  AvatarProps,
+};

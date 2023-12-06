@@ -37,7 +37,7 @@
     "strictPropertyInitialization": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "output", "**/package.json", "packages", "providers"]
