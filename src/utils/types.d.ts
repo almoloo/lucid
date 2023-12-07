@@ -52,6 +52,53 @@ interface GeneratedTextResponse {
   };
 }
 
+interface DreamFile {
+  appId: string;
+  modelId: string;
+  pkh: string;
+  fileContent:
+    | {
+        content?: {
+          date: string;
+          text: string;
+          image: string;
+          public: boolean;
+          emotion:
+            | "Happiness"
+            | "Sadness"
+            | "Fear"
+            | "Anger"
+            | "Surprise"
+            | "Disgust"
+            | "Love"
+            | "Confusion"
+            | "Excitement"
+            | "Peacefulness";
+          createdAt: string;
+          encrypted: string;
+          updatedAt: string;
+          modelVersion: string;
+          interpretation: string;
+        };
+        file?:
+          | {
+              fileId: string;
+              fileName: string;
+              fileType: number;
+              contentId: string;
+              createdAt: string;
+              fsVersion: string;
+              updatedAt: string;
+              contentType: {
+                resource: string;
+                resourceId: string;
+              };
+            }
+          | undefined;
+      }
+    | undefined;
+}
+
 export type {
   ConnectedButtonProps,
   ConnectButtonProps,
@@ -59,4 +106,5 @@ export type {
   AvatarProps,
   GeneratedImageResponse,
   GeneratedTextResponse,
+  DreamFile,
 };

@@ -61,6 +61,49 @@ const formSchema = z.object({
   emotion: z.string().min(1, { message: "Emotion is required" }),
 });
 
+export const emotions = [
+  {
+    value: "Happiness",
+    label: "Joyful, delighted, content, cheerful",
+  },
+  {
+    value: "Sadness",
+    label: "Sorrowful, melancholic, upset, gloomy",
+  },
+  {
+    value: "Fear",
+    label: "Anxious, terrified, panicked, uneasy",
+  },
+  {
+    value: "Anger",
+    label: "Irritated, enraged, frustrated, furious",
+  },
+  {
+    value: "Surprise",
+    label: "Astonished, amazed, stunned, startled",
+  },
+  {
+    value: "Disgust",
+    label: "Revolted, repulsed, distaste, aversion",
+  },
+  {
+    value: "Love",
+    label: "Affectionate, adoring, caring, passionate",
+  },
+  {
+    value: "Confusion",
+    label: "Perplexed, bewildered, disoriented, puzzled",
+  },
+  {
+    value: "Excitement",
+    label: "Eager, thrilled, enthusiastic, exhilarated",
+  },
+  {
+    value: "Peacefulness",
+    label: "Calm, serene, tranquil, relaxed",
+  },
+];
+
 const Create = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,48 +122,6 @@ const Create = () => {
   const [dreamStatus, setDreamStatus] = useState(
     form.getValues().public ? "Public" : "Private"
   );
-  const emotions = [
-    {
-      value: "Happiness",
-      label: "Joyful, delighted, content, cheerful",
-    },
-    {
-      value: "Sadness",
-      label: "Sorrowful, melancholic, upset, gloomy",
-    },
-    {
-      value: "Fear",
-      label: "Anxious, terrified, panicked, uneasy",
-    },
-    {
-      value: "Anger",
-      label: "Irritated, enraged, frustrated, furious",
-    },
-    {
-      value: "Surprise",
-      label: "Astonished, amazed, stunned, startled",
-    },
-    {
-      value: "Disgust",
-      label: "Revolted, repulsed, distaste, aversion",
-    },
-    {
-      value: "Love",
-      label: "Affectionate, adoring, caring, passionate",
-    },
-    {
-      value: "Confusion",
-      label: "Perplexed, bewildered, disoriented, puzzled",
-    },
-    {
-      value: "Excitement",
-      label: "Eager, thrilled, enthusiastic, exhilarated",
-    },
-    {
-      value: "Peacefulness",
-      label: "Calm, serene, tranquil, relaxed",
-    },
-  ];
 
   const dreamVersion = import.meta.env.VITE_DREAM_VERSION;
   const dreamModel = modelParser.getModelByName("dream");
