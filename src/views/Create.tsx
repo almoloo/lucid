@@ -2,9 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ModelParser, Output } from "@dataverse/model-parser";
 import app from "../../output/app.json";
 import { useCreateIndexFile, useStore } from "@dataverse/hooks";
-import { DreamFormData } from "../utils/types";
+import {
+  DreamFormData,
+  GeneratedImageResponse,
+  GeneratedTextResponse,
+} from "../utils/types";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -39,13 +44,16 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
+import interpretDream from "@/utils/interpretDream";
+import generateDreamImage from "@/utils/generateDreamImage";
+import { uploadToIPFS } from "@/utils/uploadToIPFS";
 
 const modelParser = new ModelParser(app as Output);
 const formSchema = z.object({
   text: z
     .string()
     .min(1, { message: "Dream description is required" })
-    .max(1024, { message: "Dream description can`t exceed 1024 characters." }),
+    .max(280, { message: "Dream description can`t exceed 1024 characters." }),
   public: z.boolean(),
   date: z.date({
     required_error: "Date of dream is required",
@@ -63,6 +71,7 @@ const Create = () => {
       emotion: undefined,
     },
   });
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
@@ -120,7 +129,8 @@ const Create = () => {
   const { createdIndexFile, createIndexFile } = useCreateIndexFile({
     onSuccess: (result) => {
       console.log("[createFile]create file success:", result);
-      setCurrentFileId(result.fileContent.file.fileId);
+      //   setCurrentFileId(result.fileContent.file.fileId);
+      navigate(`/dream/${result.fileContent.file.fileId}`);
     },
     onError(error) {
       console.error("[createFile]create file failed:", error);
@@ -130,35 +140,79 @@ const Create = () => {
     },
   });
 
-  const submitHandler = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const createDream = useCallback(
+    async (
+      e: React.FormEvent,
+      id: string,
+      formData: {
+        text: string;
+        public: boolean;
+        date: Date;
+        emotion: string;
+        interpretation: string;
+        image: string;
+      }
+    ) => {
+      e.preventDefault();
+      if (!dreamModel) {
+        console.error("postModel undefined");
+        return;
+      }
+
+      await createIndexFile({
+        modelId: dreamModel.streams[dreamModel.streams.length - 1].modelId,
+        fileName: id,
+        fileContent: {
+          ...formData,
+          modelVersion: dreamVersion,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      });
+    },
+    [dreamModel, createIndexFile]
+  );
+
+  const submitHandler = async (
+    values: z.infer<typeof formSchema>,
+    e: React.FormEvent
+  ) => {
     try {
       setLoading(true);
       setLoadingMessage("Preparing to submit your dream...");
-    } catch (error) {}
+      // ----- INTERPRET DREAM -----
+      setLoadingMessage("Interpreting your dream using AI...");
+      const interpretedDream: GeneratedTextResponse = await interpretDream(
+        values.text
+      );
+      // ----- GENERATE DREAM IMAGE -----
+      setLoadingMessage("Illustrating your dream using AI...");
+      const generatedImage: GeneratedImageResponse = await generateDreamImage(
+        ` turn this dream into an digital illustration with the ${values.emotion} emotion: ${values.text}`
+      );
+      // ----- UPLOAD IMAGE TO IPFS -----
+      setLoadingMessage("Uploading image to IPFS...");
+      const ipfs = await uploadToIPFS(generatedImage.data[0].b64_json);
+      const ipfsAddress = `https://ipfs.io/ipfs/${ipfs}`;
+      //I was walking my dog in the park while eating an ice cream and enjoying the scenery.
+      // ----- CREATE DREAM -----
+      setLoadingMessage("Submitting your dream...");
+      const dreamId = interpretedDream.id;
+      const dreamData = {
+        text: values.text,
+        public: values.public,
+        date: values.date,
+        emotion: values.emotion,
+        interpretation: interpretedDream.choices[0].message.content,
+        image: ipfsAddress,
+      };
+      await createDream(e, dreamId, dreamData);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  //   const createDream = useCallback(
-  //     async (e: React.FormEvent) => {
-  //       e.preventDefault();
-  //       if (!dreamModel) {
-  //         console.error("postModel undefined");
-  //         return;
-  //       }
-
-  //       createIndexFile({
-  //         modelId: dreamModel.streams[dreamModel.streams.length - 1].modelId,
-  //         fileName: "create file test",
-  //         fileContent: {
-  //           ...formData,
-  //           modelVersion: dreamVersion,
-  //           createdAt: new Date().toISOString(),
-  //           updatedAt: new Date().toISOString(),
-  //         },
-  //       });
-  //     },
-  //     [dreamModel, createIndexFile]
-  //   );
 
   return (
     <section className="container relative lg:-my-5 lg:max-w-[600px] lg:border-x lg:py-5">
@@ -191,7 +245,7 @@ const Create = () => {
                 <FormControl>
                   <Textarea
                     placeholder="Describe your dream as much as you can remember..."
-                    rows={10}
+                    rows={5}
                     {...field}
                   />
                 </FormControl>
