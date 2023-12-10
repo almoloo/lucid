@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ModelParser, Output } from "@dataverse/model-parser";
 import app from "../../output/app.json";
 import { useFeedsByAddress, useStore } from "@dataverse/hooks";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DreamFile } from "../utils/types";
 import { Bed, Calendar, LockKeyhole, Sparkles } from "lucide-react";
 import { emotions } from "./Create";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 const modelParser = new ModelParser(app as Output);
 
 const Dream = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const dreamModel = modelParser.getModelByName("dream");
   const { pkh, filesMap: dreams } = useStore();
@@ -24,7 +25,8 @@ const Dream = () => {
     },
     onSuccess: (result) => {
       console.log("[loadDreams]load files success, result:", result);
-      if (!result) {
+      if (!result || Object.keys(result).length === 0) {
+        navigate("/404");
         return;
       }
       setDream(result[id] as DreamFile);
@@ -62,7 +64,7 @@ const Dream = () => {
           <Bed className="mr-2 h-4 w-4" />
           <strong>Dream description</strong>
         </div>
-        <p className="mt-3 border-l-4 py-3 pl-3">
+        <p className="mt-3 border-l-4 py-3 pl-3 font-serif">
           {dream?.fileContent?.content?.text}
         </p>
       </div>
@@ -71,14 +73,14 @@ const Dream = () => {
         <img
           src={dream?.fileContent?.content?.image}
           alt="Dream illustration"
-          className="rounded"
+          className="aspect-square rounded bg-slate-700"
         />
         {dream?.fileContent?.content?.public === false && (
-          <div className="absolute left-0 right-0 top-0 m-3">
-            <Button variant="outline" disabled size="sm">
-              <LockKeyhole className="mr-2 h-4 w-4" />
+          <div className="absolute left-0 right-0 top-0 m-3 text-xs text-slate-200">
+            <div className="inline-flex items-center rounded bg-slate-900/80 px-2 py-1">
+              <LockKeyhole className="mr-1 h-3 w-3" />
               Private
-            </Button>
+            </div>
           </div>
         )}
       </div>

@@ -6,7 +6,8 @@ import Unauthorized from "../Unauthorized";
 import { Toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 import logo from "../../src/assets/images/logo.svg";
-import { Braces, Github } from "lucide-react";
+import { Braces, Github, PencilLine, ScrollText, Sparkles } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const Layout: React.FC = () => {
   const { pkh } = useStore();
@@ -22,26 +23,31 @@ const Layout: React.FC = () => {
           <div className="flex h-5 items-center gap-1">
             <Link to={`/create`}>
               <Button size="sm" variant="ghost">
+                <PencilLine className="mr-2 h-4 w-4" />
                 Create Entry
               </Button>
             </Link>
+            <Separator orientation="vertical" />
             <Link to={`/dreams`}>
               <Button size="sm" variant="ghost">
+                <ScrollText className="mr-2 h-4 w-4" />
                 My Dreams
               </Button>
             </Link>
-            {/* <Link to={`/account`}>
+            <Separator orientation="vertical" />
+            <Link to={`/explore`}>
               <Button size="sm" variant="ghost">
-                Account
+                <Sparkles className="mr-2 h-4 w-4" />
+                Explore
               </Button>
-            </Link> */}
+            </Link>
           </div>
         )}
         <div className="ml-auto">
           <AccountButton />
         </div>
       </header>
-      <main className="grow p-5">
+      <main className="flex grow flex-col p-5">
         {!pkh && location.pathname !== "/" ? <Unauthorized /> : <Outlet />}
       </main>
       <footer className="flex content-between items-center border-t p-5">

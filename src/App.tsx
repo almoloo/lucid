@@ -6,8 +6,8 @@ import Layout from "./views/Layout";
 import Home from "./views/Home";
 import Create from "./views/Create";
 import { Dreams } from "./views/Dreams";
-import Account from "./views/Account";
 import Dream from "./views/Dream";
+import Explore from "./views/Explore";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <Dreams />,
       },
       {
-        path: "/account",
-        element: <Account />,
+        path: "/explore",
+        element: <Explore />,
       },
       {
         path: "/dream/:id",
