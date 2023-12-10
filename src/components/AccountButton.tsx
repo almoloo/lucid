@@ -63,7 +63,7 @@ const AccountButton = () => {
   const connectedButton = (props: ConnectedButtonProps) => {
     return (
       <>
-        <Button variant={"outline"} className="">
+        <Button variant={"outline"}>
           <UserAvatar address={props.address} className="mr-3 h-6 w-6" />
           <div className="flex flex-col items-start">
             <small
