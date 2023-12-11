@@ -18,6 +18,7 @@ const Dream = () => {
   const [dream, setDream] = useState<DreamFile>();
   const [emotion, setEmotion] = useState<{ value: string; label: string }>();
   const { toast } = useToast();
+  const [loadingImage, setLoadingImage] = useState(true);
 
   const { loadFeedsByAddress } = useFeedsByAddress({
     model: dreamModel,
@@ -98,10 +99,24 @@ const Dream = () => {
             src={dream?.fileContent?.content?.image}
             alt="Dream illustration"
             className="relative z-10 rounded bg-slate-700"
+            onLoad={() => {
+              setLoadingImage(false);
+            }}
+            onError={() => {
+              setLoadingImage(false);
+              toast({
+                title: "Error!",
+                description: "Failed to load image",
+                variant: "destructive",
+              });
+            }}
           />
-          <div className="absolute z-0 flex h-full w-full items-center justify-center text-xs">
-            Uploading image to IPFS...
-          </div>
+          {loadingImage && (
+            <div className="absolute z-0 flex h-full w-full flex-col items-center justify-center text-xs">
+              <span>Loading image from IPFS...</span>
+              <small>Might take a while the first time!</small>
+            </div>
+          )}
         </div>
         {dream?.fileContent?.content?.public === false && (
           <div className="absolute left-0 right-0 top-0 m-3 text-xs text-slate-200">
