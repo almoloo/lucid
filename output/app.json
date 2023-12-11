@@ -1,7 +1,7 @@
 {
-  "id": "5d84cd48-72f1-4bc3-9312-81d34f383e0b",
-  "createdAt": 1701902671,
-  "updatedAt": 1701902671,
+  "id": "2a651af3-209f-4800-9de6-d022eefa516d",
+  "createdAt": 1702327879,
+  "updatedAt": 1702327879,
   "deletedAt": null,
   "name": "lucid",
   "logo": "https://bafybeifozdhcbbfydy2rs6vbkbbtj3wc4vjlz5zg2cnqhb2g4rm2o5ldna.ipfs.w3s.link/dataverse.svg",
@@ -16,29 +16,16 @@
       "internal": false,
       "streams": [
         {
-          "modelId": "kjzl6hvfrbw6ca2d39ewlwlzt86yufebtyk7vwfquhie0jpzg2ou9ibu7zuwwfr",
-          "createdAt": 1701902671,
-          "schema": "type dream @createModel(accountRelation: LIST, description: \"Dataverse: 5d84cd48-72f1-4bc3-9312-81d34f383e0b | dream\") {\n  author: DID! @documentAccount\n  version: CommitID! @documentVersion\n  modelVersion: String! @string(maxLength: 100)\n  text: String! @string(maxLength: 300000000)\n  image: String @string(maxLength: 2000000)\n  interpretation: String @string(maxLength: 300000000)\n  options: String @string(maxLength: 300000000)\n  public: Boolean!\n  date: DateTime!\n  emotion: String @string(maxLength: 300000000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  encrypted: String @string(maxLength: 300000000)\n}",
+          "modelId": "kjzl6hvfrbw6cahjt2e5j4wqxey8hco9wxusv1plctsp1tbi0l7cw7is3zdfab5",
+          "createdAt": 1702327879,
+          "schema": "type dream @createModel(accountRelation: LIST, description: \"Dataverse: 2a651af3-209f-4800-9de6-d022eefa516d | dream\") {\n  author: DID! @documentAccount\n  version: CommitID! @documentVersion\n  modelVersion: String! @string(maxLength: 100)\n  text: String! @string(maxLength: 300000000)\n  image: String @string(maxLength: 2000000)\n  interpretation: String @string(maxLength: 300000000)\n  options: String @string(maxLength: 300000000)\n  public: Boolean!\n  date: DateTime!\n  emotion: String @string(maxLength: 300000000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  encrypted: String @string(maxLength: 300000000)\n}",
           "isPublicDomain": false,
           "encryptable": [
             "text",
-            "image"
+            "image",
+            "emotion",
+            "interpretation"
           ],
-          "version": 0,
-          "latest": true
-        }
-      ]
-    },
-    {
-      "modelName": "profile",
-      "internal": false,
-      "streams": [
-        {
-          "modelId": "kjzl6hvfrbw6caeulgn0ubadwgr0e04a88jlkmupyw2azzfimg55gryhyo0kz0s",
-          "createdAt": 1701902671,
-          "schema": "type profile @createModel(accountRelation: SINGLE, description: \"Dataverse: 5d84cd48-72f1-4bc3-9312-81d34f383e0b | profile\") {\n  author: DID! @documentAccount\n  version: CommitID! @documentVersion\n  name: String! @string(maxLength: 100)\n  description: String! @string(maxLength: 10000)\n  image: String! @string(maxLength: 1000)\n  background: String! @string(maxLength: 1000)\n}",
-          "isPublicDomain": true,
-          "encryptable": [],
           "version": 0,
           "latest": true
         }
@@ -49,9 +36,9 @@
       "internal": false,
       "streams": [
         {
-          "modelId": "kjzl6hvfrbw6c7hef32cccu8pncso00q6p8uu54yvbrbokfdhxqr3ruh1gjk8js",
-          "createdAt": 1701902671,
-          "schema": "type actionFile @createModel(accountRelation: LIST, description: \"Dataverse: 5d84cd48-72f1-4bc3-9312-81d34f383e0b | ActionFile\") {\n  fsVersion: String @string(maxLength: 1000)\n  action: String! @string(maxLength: 300000000)\n  relationId: String! @string(maxLength: 1000)\n  fileName: String! @string(maxLength: 300000000)\n  fileType: Int!\n  accessControl: String @string(maxLength: 300000000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  deleted: Boolean\n  reserved: String @string(maxLength: 300000000)\n}",
+          "modelId": "kjzl6hvfrbw6c6na7uwoly6ierm9ookfp3l4s73d25j0e2pqxm2la0yw2deeanl",
+          "createdAt": 1702327879,
+          "schema": "type actionFile @createModel(accountRelation: LIST, description: \"Dataverse: 2a651af3-209f-4800-9de6-d022eefa516d | ActionFile\") {\n  fsVersion: String @string(maxLength: 1000)\n  action: String! @string(maxLength: 300000000)\n  relationId: String! @string(maxLength: 1000)\n  fileName: String! @string(maxLength: 300000000)\n  fileType: Int!\n  accessControl: String @string(maxLength: 300000000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  deleted: Boolean\n  reserved: String @string(maxLength: 300000000)\n}",
           "isPublicDomain": false,
           "encryptable": [],
           "version": 0,
@@ -64,9 +51,9 @@
       "internal": false,
       "streams": [
         {
-          "modelId": "kjzl6hvfrbw6cbc1tuod3w1nagmd1phrsqd2394kym1h6tay7dl8qw1a0js1ssv",
-          "createdAt": 1701902671,
-          "schema": "type contentFolder @createModel(accountRelation: LIST, description: \"Dataverse: 5d84cd48-72f1-4bc3-9312-81d34f383e0b | ContentFolder\") {\n  fsVersion: String @string(maxLength: 1000)\n  indexFolderId: String! @string(maxLength: 1000)\n  mirrorFileIds: [String!] @list(minLength: 0, maxLength: 300000000) @string(maxLength: 2000)\n  encryptedFileKeys: String @string(maxLength: 300000000)\n  reserved: String @string(maxLength: 300000000)\n}",
+          "modelId": "kjzl6hvfrbw6c9rpeub2oxsptqvh7i7qrhusm8euo3xqb2sv5q0k9f2fahnzmwc",
+          "createdAt": 1702327879,
+          "schema": "type contentFolder @createModel(accountRelation: LIST, description: \"Dataverse: 2a651af3-209f-4800-9de6-d022eefa516d | ContentFolder\") {\n  fsVersion: String @string(maxLength: 1000)\n  indexFolderId: String! @string(maxLength: 1000)\n  mirrorFileIds: [String!] @list(minLength: 0, maxLength: 300000000) @string(maxLength: 2000)\n  encryptedFileKeys: String @string(maxLength: 300000000)\n  reserved: String @string(maxLength: 300000000)\n}",
           "isPublicDomain": false,
           "encryptable": [],
           "version": 0,
@@ -79,9 +66,9 @@
       "internal": false,
       "streams": [
         {
-          "modelId": "kjzl6hvfrbw6c9s332gcxyk32o8snimk7lmnctnrbslpt5da63hgn0xmxpk0682",
-          "createdAt": 1701902671,
-          "schema": "type indexFile @createModel(accountRelation: LIST, description: \"Dataverse: 5d84cd48-72f1-4bc3-9312-81d34f383e0b | IndexFile\") {\n  fsVersion: String @string(maxLength: 1000)\n  contentId: String! @string(maxLength: 1000)\n  contentType: String! @string(maxLength: 1000)\n  fileName: String! @string(maxLength: 300000000)\n  fileType: Int!\n  accessControl: String @string(maxLength: 300000000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  deleted: Boolean\n  reserved: String @string(maxLength: 300000000)\n}",
+          "modelId": "kjzl6hvfrbw6c83pkrr7fpt4q4h5zfonp5goey7yye8svwb682s2j68dwgxkbjl",
+          "createdAt": 1702327879,
+          "schema": "type indexFile @createModel(accountRelation: LIST, description: \"Dataverse: 2a651af3-209f-4800-9de6-d022eefa516d | IndexFile\") {\n  fsVersion: String @string(maxLength: 1000)\n  contentId: String! @string(maxLength: 1000)\n  contentType: String! @string(maxLength: 1000)\n  fileName: String! @string(maxLength: 300000000)\n  fileType: Int!\n  accessControl: String @string(maxLength: 300000000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  deleted: Boolean\n  reserved: String @string(maxLength: 300000000)\n}",
           "isPublicDomain": false,
           "encryptable": [],
           "version": 0,
@@ -94,9 +81,9 @@
       "internal": false,
       "streams": [
         {
-          "modelId": "kjzl6hvfrbw6c8mf2e03vcac7av6t1xwiyjbw3znyo6uhhtmzmpx8t9dyfv9lz4",
-          "createdAt": 1701902671,
-          "schema": "type indexFolder @createModel(accountRelation: LIST, description: \"Dataverse: 5d84cd48-72f1-4bc3-9312-81d34f383e0b | IndexFolder\") {\n  fsVersion: String @string(maxLength: 1000)\n  folderName: String! @string(maxLength: 300000000)\n  folderType: Int!\n  contentFolderIds: [String!]! @list(minLength: 1, maxLength: 10000) @string(maxLength: 2000)\n  accessControl: String @string(maxLength: 300000000)\n  parentFolderId: String @string(maxLength: 1000)\n  childFolderIds: [String] @list(maxLength: 10000) @string(maxLength: 2000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  deleted: Boolean\n  options: String @string(maxLength: 300000000)\n  reserved: String @string(maxLength: 300000000)\n}",
+          "modelId": "kjzl6hvfrbw6c8gwoi442cvo9gib2trxw7bi1h70sdnvsvjs924aqxed8878j81",
+          "createdAt": 1702327879,
+          "schema": "type indexFolder @createModel(accountRelation: LIST, description: \"Dataverse: 2a651af3-209f-4800-9de6-d022eefa516d | IndexFolder\") {\n  fsVersion: String @string(maxLength: 1000)\n  folderName: String! @string(maxLength: 300000000)\n  folderType: Int!\n  contentFolderIds: [String!]! @list(minLength: 1, maxLength: 10000) @string(maxLength: 2000)\n  accessControl: String @string(maxLength: 300000000)\n  parentFolderId: String @string(maxLength: 1000)\n  childFolderIds: [String] @list(maxLength: 10000) @string(maxLength: 2000)\n  createdAt: DateTime!\n  updatedAt: DateTime!\n  deleted: Boolean\n  options: String @string(maxLength: 300000000)\n  reserved: String @string(maxLength: 300000000)\n}",
           "isPublicDomain": false,
           "encryptable": [],
           "version": 0,

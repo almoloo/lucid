@@ -1,12 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ModelParser, Output } from "@dataverse/model-parser";
 import app from "../../output/app.json";
-import { useCreateIndexFile, useStore } from "@dataverse/hooks";
-import {
-  DreamFormData,
-  GeneratedImageResponse,
-  GeneratedTextResponse,
-} from "../utils/types";
+import { useCreateIndexFile } from "@dataverse/hooks";
+import { GeneratedImageResponse, GeneratedTextResponse } from "../utils/types";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -118,14 +114,11 @@ const Create = () => {
 
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
-  const [currentFileId, setCurrentFileId] = useState<string>();
-  const [dreamStatus, setDreamStatus] = useState(
-    form.getValues().public ? "Public" : "Private"
-  );
+  //   const [currentFileId, setCurrentFileId] = useState<string>();
 
   const dreamVersion = import.meta.env.VITE_DREAM_VERSION;
   const dreamModel = modelParser.getModelByName("dream");
-  const { pkh } = useStore();
+  //   const { pkh } = useStore();
 
   const { createdIndexFile, createIndexFile } = useCreateIndexFile({
     onSuccess: (result) => {
@@ -156,28 +149,37 @@ const Create = () => {
     ) => {
       e.preventDefault();
       if (!dreamModel) {
-        console.error("postModel undefined");
+        console.error("dreamModel undefined");
         return;
+      }
+
+      const fileContent = {
+        ...formData,
+        modelVersion: dreamVersion,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        encrypted: {},
+      };
+
+      if (!formData.public) {
+        fileContent.encrypted = {
+          text: true,
+          emotion: true,
+          interpretation: true,
+          image: true,
+        };
       }
 
       await createIndexFile({
         modelId: dreamModel.streams[dreamModel.streams.length - 1].modelId,
         fileName: id,
-        fileContent: {
-          ...formData,
-          modelVersion: dreamVersion,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
+        fileContent,
       });
     },
     [dreamModel, createIndexFile]
   );
 
-  const submitHandler = async (
-    values: z.infer<typeof formSchema>,
-    e: React.FormEvent
-  ) => {
+  const submitHandler = async (values: z.infer<typeof formSchema>, e: any) => {
     try {
       setLoading(true);
       setLoadingMessage("Preparing to submit your dream...");
@@ -270,21 +272,17 @@ const Create = () => {
                   <div className="flex items-center gap-3">
                     <Switch
                       {...field}
-                      id="public-switch"
-                      onCheckedChange={() =>
-                        setDreamStatus(
-                          dreamStatus === "Public" ? "Private" : "Public"
-                        )
-                      }
-                      defaultChecked={form.getValues().public}
+                      //   id="public-switch"
+                      onCheckedChange={field.onChange}
+                      checked={field.value}
                     />
                     <Label htmlFor="public-switch" className="cursor-pointer">
-                      {dreamStatus}
+                      {field.value ? "Public" : "Private"}
                     </Label>
                   </div>
                 </FormControl>
                 <FormDescription>
-                  {dreamStatus === "Public"
+                  {field.value
                     ? "Share this dream entry with the community. Others can view and potentially find connections or similarities with their own dreams."
                     : "Keep this dream entry personal and private. Your dream will remain confidential and accessible only to you."}
                 </FormDescription>

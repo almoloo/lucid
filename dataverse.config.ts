@@ -9,12 +9,7 @@ export const config = {
     {
       isPublicDomain: false, // default
       schemaName: "dream.graphql",
-      encryptable: ["text", "image"], // strings within the schema and within the array represent fields that may be encrypted, while fields within the schema but not within the array represent fields that will definitely not be encrypted
-    },
-    {
-      isPublicDomain: true,
-      schemaName: "profile.graphql",
-      encryptable: [],
+      encryptable: ["text", "image", "emotion", "interpretation"], // strings within the schema and within the array represent fields that may be encrypted, while fields within the schema but not within the array represent fields that will definitely not be encrypted
     },
   ],
   ceramicUrl: null, // leave null to use dataverse test Ceramic node. Set to {Your Ceramic node Url} for mainnet, should start with "https://".

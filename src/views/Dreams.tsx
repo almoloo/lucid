@@ -7,6 +7,7 @@ import {
   Bed,
   Calendar,
   HeartCrack,
+  Loader2,
   LockKeyhole,
   ScrollText,
 } from "lucide-react";
@@ -15,16 +16,25 @@ const modelParser = new ModelParser(app as Output);
 
 export const Dreams = () => {
   const dreamModel = modelParser.getModelByName("dream");
-  const { pkh, filesMap: dreams } = useStore();
+  const { pkh } = useStore();
   const [dreamList, setDreamList] = useState<DreamFile[]>();
+  const [loading, setLoading] = useState(true);
+  const [subtitle, setSubtitle] = useState("");
 
   const { loadFeedsByAddress } = useFeedsByAddress({
     model: dreamModel,
     onError: (error) => {
       console.error("[loadDreams]load files failed,", error);
+      setLoading(false);
     },
     onSuccess: (result) => {
       console.log("[loadDreams]load files success, result:", result);
+      setLoading(false);
+      setSubtitle(
+        `You've had ${Object.values(result).length} dream${
+          Object.values(result).length > 1 ? "s" : ""
+        }`
+      );
       if (!result) {
         return;
       }
@@ -58,13 +68,19 @@ export const Dreams = () => {
             <ScrollText className="mr-2 h-5 w-5 text-slate-400" />
             My dreams
           </h1>
-          <small className="text-xs text-slate-500">
-            You`ve had {dreamList?.length} dream
-            {dreamList?.length! > 1 || (dreamList?.length! === 0 && "s")}
-          </small>
+          {subtitle !== "" && (
+            <small className="text-xs text-slate-500">{subtitle}</small>
+          )}
         </div>
       </section>
-      {dreamList?.length! > 0 ? (
+      {loading ? (
+        <div className="flex grow items-center justify-center">
+          <div className="flex items-center">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <span className="animate-pulse">Loading Dreams...</span>
+          </div>
+        </div>
+      ) : dreamList?.length! > 0 ? (
         <section className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           {dreamList?.map((entry) => (
             <>

@@ -1,21 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ModelParser, Output } from "@dataverse/model-parser";
 import app from "../../output/app.json";
-import { useStore, useFeeds } from "@dataverse/hooks";
+import { useFeeds } from "@dataverse/hooks";
 import { DreamFile } from "../utils/types";
-import { Bed, Calendar, HeartCrack, LockKeyhole, Sparkles } from "lucide-react";
+import { Bed, Calendar, HeartCrack, Loader2, Sparkles } from "lucide-react";
 
 const modelParser = new ModelParser(app as Output);
 
 const Explore = () => {
   const dreamModel = modelParser.getModelByName("dream");
-  const { filesMap: dreams } = useStore();
   const [dreamList, setDreamList] = useState<DreamFile[]>();
+  const [loading, setLoading] = useState(true);
 
   const { loadFeeds } = useFeeds({
     model: dreamModel,
     onError: (error) => {
       console.error("[loadDreams]load files failed,", error);
+      setLoading(false);
     },
     onSuccess: (result) => {
       console.log("[loadDreams]load files success, result:", result);
@@ -23,6 +24,7 @@ const Explore = () => {
         return;
       }
       setDreamList(Object.values(result) as DreamFile[]);
+      setLoading(false);
     },
   });
 
@@ -55,12 +57,18 @@ const Explore = () => {
           </small>
         </div>
       </section>
-      {dreamList?.length! > 0 ? (
+      {loading ? (
+        <div className="flex grow items-center justify-center">
+          <div className="flex items-center">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <span className="animate-pulse">Loading Dreams...</span>
+          </div>
+        </div>
+      ) : dreamList?.some((entry) => entry.fileContent?.content?.public) ? (
         <section className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {dreamList?.map(
             (entry) =>
-              entry.fileContent?.content?.public ||
-              (true && (
+              entry.fileContent?.content?.public && (
                 <>
                   <a
                     href={`/dream/${entry.fileContent?.file?.fileId}`}
@@ -111,7 +119,7 @@ const Explore = () => {
                     </div>
                   </a>
                 </>
-              ))
+              )
           )}
         </section>
       ) : (

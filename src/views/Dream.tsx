@@ -17,6 +17,7 @@ const Dream = () => {
   const { pkh, filesMap: dreams } = useStore();
   const [dream, setDream] = useState<DreamFile>();
   const [emotion, setEmotion] = useState<{ value: string; label: string }>();
+  const [imageLoading, setImageLoading] = useState(false);
 
   const { loadFeedsByAddress } = useFeedsByAddress({
     model: dreamModel,
@@ -70,11 +71,16 @@ const Dream = () => {
       </div>
       {/* ----- DREAM IMAGE ----- */}
       <div className="relative">
-        <img
-          src={dream?.fileContent?.content?.image}
-          alt="Dream illustration"
-          className="aspect-square rounded bg-slate-700"
-        />
+        <div className="relative aspect-square rounded bg-slate-900">
+          <img
+            src={dream?.fileContent?.content?.image}
+            alt="Dream illustration"
+            className="relative z-10 rounded bg-slate-700"
+          />
+          <div className="absolute z-0 flex h-full w-full items-center justify-center text-xs">
+            Uploading image to IPFS...
+          </div>
+        </div>
         {dream?.fileContent?.content?.public === false && (
           <div className="absolute left-0 right-0 top-0 m-3 text-xs text-slate-200">
             <div className="inline-flex items-center rounded bg-slate-900/80 px-2 py-1">
