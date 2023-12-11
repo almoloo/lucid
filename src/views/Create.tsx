@@ -43,6 +43,7 @@ import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import interpretDream from "@/utils/interpretDream";
 import generateDreamImage from "@/utils/generateDreamImage";
 import { uploadToIPFS } from "@/utils/uploadToIPFS";
+import { useToast } from "@/components/ui/use-toast";
 
 const modelParser = new ModelParser(app as Output);
 const formSchema = z.object({
@@ -111,23 +112,26 @@ const Create = () => {
     },
   });
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
-  //   const [currentFileId, setCurrentFileId] = useState<string>();
 
   const dreamVersion = import.meta.env.VITE_DREAM_VERSION;
   const dreamModel = modelParser.getModelByName("dream");
-  //   const { pkh } = useStore();
 
   const { createdIndexFile, createIndexFile } = useCreateIndexFile({
     onSuccess: (result) => {
       console.log("[createFile]create file success:", result);
-      //   setCurrentFileId(result.fileContent.file.fileId);
       navigate(`/dream/${result.fileContent.file.fileId}`);
     },
     onError(error) {
       console.error("[createFile]create file failed:", error);
+      toast({
+        title: "Error!",
+        description: "Failed to create dream file",
+        variant: "destructive",
+      });
     },
     onPending(args) {
       console.log("[createFile]create file pending:", args);
@@ -150,6 +154,11 @@ const Create = () => {
       e.preventDefault();
       if (!dreamModel) {
         console.error("dreamModel undefined");
+        toast({
+          title: "Error!",
+          description: "dreamModel undefined",
+          variant: "destructive",
+        });
         return;
       }
 
@@ -197,7 +206,6 @@ const Create = () => {
       setLoadingMessage("Uploading image to IPFS...");
       const ipfs = await uploadToIPFS(generatedImage.data[0].b64_json);
       const ipfsAddress = `https://ipfs.io/ipfs/${ipfs}`;
-      //I was walking my dog in the park while eating an ice cream and enjoying the scenery.
       // ----- CREATE DREAM -----
       setLoadingMessage("Submitting your dream...");
       const dreamId = interpretedDream.id;
@@ -212,6 +220,11 @@ const Create = () => {
       await createDream(e, dreamId, dreamData);
     } catch (error) {
       console.error(error);
+      toast({
+        title: "Error!",
+        description: "Failed to submit your dream, please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

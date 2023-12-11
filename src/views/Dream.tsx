@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DreamFile } from "../utils/types";
 import { Bed, Calendar, LockKeyhole, Sparkles } from "lucide-react";
 import { emotions } from "./Create";
-import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const modelParser = new ModelParser(app as Output);
 
@@ -14,19 +14,28 @@ const Dream = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dreamModel = modelParser.getModelByName("dream");
-  const { pkh, filesMap: dreams } = useStore();
+  const { pkh } = useStore();
   const [dream, setDream] = useState<DreamFile>();
   const [emotion, setEmotion] = useState<{ value: string; label: string }>();
-  const [imageLoading, setImageLoading] = useState(false);
+  const { toast } = useToast();
 
   const { loadFeedsByAddress } = useFeedsByAddress({
     model: dreamModel,
     onError: (error) => {
       console.error("[loadDreams]load files failed,", error);
+      toast({
+        title: "Error!",
+        description: "Failed to load dream files",
+        variant: "destructive",
+      });
     },
     onSuccess: (result) => {
       console.log("[loadDreams]load files success, result:", result);
-      if (!result || Object.keys(result).length === 0) {
+      if (
+        !result ||
+        Object.keys(result).length === 0 ||
+        result[id] === undefined
+      ) {
         navigate("/404");
         return;
       }
@@ -43,10 +52,20 @@ const Dream = () => {
   const loadDreams = useCallback(async () => {
     if (!dreamModel) {
       console.error("dreamModel undefined");
+      toast({
+        title: "Error!",
+        description: "dreamModel undefined",
+        variant: "destructive",
+      });
       return;
     }
     if (!pkh) {
       console.error("pkh undefined");
+      toast({
+        title: "Error!",
+        description: "pkh undefined",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -54,6 +73,9 @@ const Dream = () => {
   }, [dreamModel, pkh, loadFeedsByAddress]);
 
   useEffect(() => {
+    if (!id) {
+      navigate("/404");
+    }
     loadDreams();
   }, []);
 

@@ -11,6 +11,7 @@ import {
   LockKeyhole,
   ScrollText,
 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const modelParser = new ModelParser(app as Output);
 
@@ -20,11 +21,17 @@ export const Dreams = () => {
   const [dreamList, setDreamList] = useState<DreamFile[]>();
   const [loading, setLoading] = useState(true);
   const [subtitle, setSubtitle] = useState("");
+  const { toast } = useToast();
 
   const { loadFeedsByAddress } = useFeedsByAddress({
     model: dreamModel,
     onError: (error) => {
       console.error("[loadDreams]load files failed,", error);
+      toast({
+        title: "Error!",
+        description: "Failed to load dream files",
+        variant: "destructive",
+      });
       setLoading(false);
     },
     onSuccess: (result) => {
@@ -45,10 +52,20 @@ export const Dreams = () => {
   const loadDreams = useCallback(async () => {
     if (!dreamModel) {
       console.error("dreamModel undefined");
+      toast({
+        title: "Error!",
+        description: "dreamModel undefined",
+        variant: "destructive",
+      });
       return;
     }
     if (!pkh) {
       console.error("pkh undefined");
+      toast({
+        title: "Error!",
+        description: "pkh undefined",
+        variant: "destructive",
+      });
       return;
     }
 
