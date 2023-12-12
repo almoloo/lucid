@@ -24,6 +24,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const Layout: React.FC = () => {
   const { pkh } = useStore();
@@ -122,6 +123,7 @@ const Layout: React.FC = () => {
       </footer>
       <Toaster />
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 };
