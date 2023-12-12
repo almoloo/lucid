@@ -23,6 +23,7 @@ const AccountButton = () => {
       console.log("[connect]connect app success, result:", result);
     },
     onError(error) {
+      console.log("test: ", modelParser.appId);
       console.log(error);
     },
   });
