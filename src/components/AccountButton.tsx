@@ -8,7 +8,7 @@ import { ConnectButtonProps, ConnectedButtonProps } from "../utils/types";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import UserAvatar from "./UserAvatar";
-import { Loader, Loader2, Wallet } from "lucide-react";
+import { Loader2, Wallet } from "lucide-react";
 
 const modelParser = new ModelParser(app as Output);
 
@@ -21,6 +21,9 @@ const AccountButton = () => {
     autoConnect: true,
     onSuccess: (result: any) => {
       console.log("[connect]connect app success, result:", result);
+    },
+    onError(error) {
+      console.log(error);
     },
   });
   const connect = useCallback(async () => {
