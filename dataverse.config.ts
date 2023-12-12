@@ -1,7 +1,7 @@
 export const config = {
   name: "lucid", // app name should NOT contain "-"
   logo: "https://bafybeifozdhcbbfydy2rs6vbkbbtj3wc4vjlz5zg2cnqhb2g4rm2o5ldna.ipfs.w3s.link/dataverse.svg",
-  website: ["http://localhost:3867"], // you can use localhost:(port) for testing
+  website: ["https://lucid-orcin.vercel.app/"], // you can use localhost:(port) for testing
   defaultFolderName: "Main",
   description:
     "Your ultimate dream companion for recording, exploring, and enhancing your journey through the realm of dreams.",
