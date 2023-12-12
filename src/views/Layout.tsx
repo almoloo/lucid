@@ -23,6 +23,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Analytics } from "@vercel/analytics/react";
 
 const Layout: React.FC = () => {
   const { pkh } = useStore();
@@ -120,6 +121,7 @@ const Layout: React.FC = () => {
         </Link>
       </footer>
       <Toaster />
+      <Analytics />
     </div>
   );
 };
