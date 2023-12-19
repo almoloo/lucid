@@ -65,12 +65,6 @@ To run this project, you will need to add the following environment variables to
 
 `VITE_DREAM_VERSION`: 0.0.1
 
-## Roadmap
-
-- [ ] Add AI integration for dream interpretation.
-
-- [ ] Generate images based on each dream using AI.
-
 ## Disclaimer
 
 **Note:** This project was developed as a submission for the [Rebuild Ownership 2.0 Hackathon](https://dorahacks.io/hackathon/rebuild-ownership-2/detail) and is not intended for production use without further development and rigorous testing.
