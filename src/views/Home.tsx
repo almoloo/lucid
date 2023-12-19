@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="flex flex-col space-y-24">
-      <section className="container grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3">
+      <section className="grid grid-cols-1 place-items-center md:container md:grid-cols-2 lg:grid-cols-3">
         <div className="order-2 md:order-1 md:col-span-1 lg:col-span-2">
           <h2 className="mb-4 font-serif text-3xl font-bold">
             Record your dreams effortlessly with Lucid's intuitive interface.
@@ -32,9 +32,9 @@ const Home = () => {
           className="order-1 col-span-1 drop-shadow-[-5px_10px_15px_rgba(255,255,255,1)] md:order-2"
         />
       </section>
-      <section className="-mx-5 bg-slate-900/75 px-5 py-20">
-        <div className="container grid gap-10 md:grid-cols-2 lg:grid-cols-6">
-          <div className="col-span-4 lg:col-span-3">
+      <section className="-mx-5 bg-slate-900/75 px-5 py-10 md:py-20">
+        <div className="grid gap-10 md:container md:grid-cols-2 lg:grid-cols-6">
+          <div className="col-span-6 lg:col-span-3">
             <FolderKey className="mb-4 h-12 w-12 text-slate-300" />
             <h2 className="font-serif text-2xl font-bold leading-relaxed">
               Keep your dreams secure and private with Lucid's encrypted
@@ -70,11 +70,11 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="container grid grid-cols-9 space-y-20 text-center md:space-x-10 md:space-y-0 md:text-left lg:grid-cols-12 lg:items-center lg:space-x-20">
+      <section className="grid grid-cols-9 space-y-10 md:container md:space-x-10 md:space-y-0 lg:grid-cols-12 lg:items-center lg:space-x-20">
         <img
           src={secondImage}
           alt="lucid"
-          className="col-span-5 col-start-3 rounded-full drop-shadow-[5px_10px_15px_rgba(255,255,255,1)] md:col-span-2 lg:col-span-3 lg:col-start-2"
+          className="col-span-4 rounded-full drop-shadow-[5px_10px_15px_rgba(255,255,255,1)] md:col-span-2 lg:col-span-3 lg:col-start-2"
         />
         <div className="col-span-9 col-start-1 flex flex-col gap-5 md:col-span-7 lg:col-span-7 lg:col-start-auto">
           <h2 className="font-serif text-2xl font-bold">
@@ -87,7 +87,7 @@ const Home = () => {
             personal growth and gain a better understanding of your inner
             thoughts and emotions.
           </p>
-          <ul className="flex flex-col items-center gap-3 md:items-start">
+          <ul className="flex flex-col items-start gap-3">
             <li className="flex items-center gap-2 text-sm capitalize">
               <ChevronRightSquare className="mr-2 h-4 w-4 text-slate-400" />
               Improve memory and dream recall
@@ -103,11 +103,11 @@ const Home = () => {
           </ul>
         </div>
       </section>
-      <section className="container grid grid-cols-9 space-y-20 text-center md:space-x-10 md:space-y-0 md:text-left lg:grid-cols-12 lg:items-center lg:space-x-20">
+      <section className="grid grid-cols-9 space-y-10 md:container md:space-x-10 md:space-y-0 lg:grid-cols-12 lg:items-center lg:space-x-20">
         <img
           src={thirdImage}
           alt="lucid"
-          className="col-span-5 col-start-3 rounded-full drop-shadow-[-5px_10px_15px_rgba(255,255,255,1)] md:col-span-2 lg:order-2 lg:col-span-3 lg:col-start-auto"
+          className="col-span-4 rounded-full drop-shadow-[-5px_10px_15px_rgba(255,255,255,1)] md:col-span-2 lg:order-2 lg:col-span-3 lg:col-start-auto"
         />
         <div className="col-span-9 col-start-1 flex flex-col gap-5 md:col-span-7 lg:order-1 lg:col-span-8 lg:col-start-1">
           <h2 className="font-serif text-2xl font-bold">
@@ -122,8 +122,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="container mb-24">
-        <div className="rounded-xl bg-slate-900 p-10">
+      <section className="mb-24 md:container">
+        <div className="rounded-xl bg-slate-900 p-5 md:p-10">
           <h2 className="mb-3 flex items-center gap-2 text-slate-400">
             <AlertOctagon className="h-4 w-4" />
             Disclaimer:
